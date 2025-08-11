@@ -27,18 +27,49 @@ public class EdgeGraph {
 
 
     }
+    public boolean isClosed(String adjacent1 ){
+
+        return dfs(adjacent1,adjacent1,new ArrayList<>(),0);
+
+
+    }
 
     public boolean dfs (String origin,String goal,List<String> visitados){
         if (Objects.equals(origin, goal)){
             System.out.println("Found it!");
             return true;
         }
+
         visitados.add(origin);
         for (Edge neighbour : graph.get(origin)){
             System.out.println("I´m in " + origin + " going on " + neighbour.getEdge());
 
             if (!visitados.contains(neighbour.getEdge())) {
                 if(dfs(neighbour.getEdge(),goal,visitados)){
+                    return true;
+                }
+            }
+
+        }
+        visitados.remove(origin);
+        System.out.println("Didnt find it");
+        return false;
+    }
+    public boolean dfs (String origin,String goal,List<String> visitados,long time){
+        if (time !=0){
+            if (Objects.equals(origin, goal)){
+                System.out.println("Found it!");
+                return true;
+            }
+        }
+        if (time !=0){
+            visitados.add(origin);
+        }
+        for (Edge neighbour : graph.get(origin)){
+            System.out.println("I´m in " + origin + " going on " + neighbour.getEdge());
+
+            if (!visitados.contains(neighbour.getEdge())) {
+                if(dfs(neighbour.getEdge(),goal,visitados,time+1)){
                     return true;
                 }
             }
@@ -66,9 +97,6 @@ public class EdgeGraph {
         for (Edge neighbour : graph.get(origin)){
 
             System.out.println("I´m in " + origin + " going on " + neighbour.getEdge());
-
-
-
 
             if (!visitados.contains(neighbour.getEdge())) {
                 long newBest = dfsBestWay(neighbour.getEdge(),goal,visitados,bestway,current_way + neighbour.getWeight());
@@ -109,10 +137,73 @@ public class EdgeGraph {
         edgeGraph.addEdge("E",new Edge("F",15));
         edgeGraph.addEdge("F",new Edge("D",15));
         edgeGraph.addEdge("D",new Edge("A",15));
-        edgeGraph.isConnected("A","F");
-        edgeGraph.findingBestWay("A","F");
-
         edgeGraph.printGraph();
 
+        edgeGraph.isClosed("A");
+
+
+        EdgeGraph graph = new EdgeGraph();
+        while(true){
+
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Do you wanna?");
+            System.out.println("1 - Add Edge");
+            System.out.println("2 - Print Graph");
+            System.out.println("3 - DFS");
+            try{
+            int decision = scanner.nextInt();
+
+                if ((decision > 5) || (decision < 1)) {
+                    break;
+                }
+                switch (decision) {
+
+                    case 1: {
+                        printAdj();
+                        String adjacent = scanner.next();
+                        printVertex();
+                        String vertex = scanner.next();
+                        long weight = scanner.nextLong();
+                        graph.addEdge(adjacent, new Edge(vertex, weight));
+                        break;
+                    }
+                    case 2: {
+                        graph.printGraph();
+                        break;
+                    }
+                    case 3: {
+                        printAdj();
+                        String adjacent = scanner.next();
+                        printAdj();
+                        String adjacent2 = scanner.next();
+                        graph.isConnected(adjacent, adjacent2);
+                        break;
+                    }
+                    default:
+
+                }
+            }catch (Exception e){
+                String error = e.toString();
+
+                if (error.equals("java.util.InputMismatchException")){
+                    System.out.println("Digite um número!");
+                }
+
+            }
+        }
+
+
+
     }
+
+    public static void printAdj(){
+        System.out.println("Adjacent");
+    }
+    public static void printVertex(){
+        System.out.println("Vertex");
+    }
+
+
+
 }
+

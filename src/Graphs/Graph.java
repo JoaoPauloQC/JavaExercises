@@ -38,6 +38,13 @@ public class Graph {
 
     }
 
+    public boolean isClosed(String adjacent1 ){
+
+        return dfs(adjacent1,adjacent1,new ArrayList<>());
+
+
+    }
+
     public boolean dfs (String origin,String neighboor,List<String> visitados){
         visitados.add(origin);
         for (String value : graph.get(origin)){
