@@ -186,7 +186,7 @@ public class EdgeGraph {
                 String error = e.toString();
 
                 if (error.equals("java.util.InputMismatchException")){
-                    System.out.println("Digite um número!");
+                    System.out.println("Type a number!");
                 }
 
             }
