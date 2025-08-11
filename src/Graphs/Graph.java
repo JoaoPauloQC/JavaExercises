@@ -47,10 +47,11 @@ public class Graph {
                 return true;
             }
 
-                if (!visitados.contains(value)) {
-                    if(dfs(value,neighboor,visitados))
-                        return true;
+            if (!visitados.contains(value)) {
+                if(dfs(value,neighboor,visitados)) {
+                    return true;
                 }
+            }
 
         }
         System.out.println("Didnt find it");
